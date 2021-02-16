@@ -4,11 +4,12 @@
 #include <time.h>
 #define nMax 30
 
+
 // Kamus global
 typedef struct{
 int TI[nMax+1];
 int nEff;
-}TabInt;
+}TabInt; //
 
 // Definisi prototype
 void instruksi();
@@ -20,26 +21,27 @@ void getMenuPilihTransfer();
 void getMenuInfoRekening();
 void cetakTabel(TabInt T);
 void addElmTab(TabInt *T, int x);
-//void urutBubbleDesc(TabInt *T);
-//void urutBubbleAsc(TabInt *T);
 void getPin();
+void pinsalah();
 void rekeningblokir();
-void gopaygagal();
 void waktu();
+void limittab();
+void limittrans();
 
 void instruksi(){
 printf("					SELAMAT DATANG\n");
 printf("					      DI\n");
 printf("					   BANK BRI\n\n");
 printf(" PETUNJUK PENGGUNAAN ATM :\n\n");
-printf(" 1. SETIAP SELESAI MEMASUKKAN DATA YANG DIMINTA TEKAN ENTER\n");
-printf(" 2. SETIAP SELESAI MEMILIH OPSI YANG DIINGINKAN TEKAN ENTER\n");
-printf(" 3. SETIAP DATA YANG DIMASUKKAN HANYA BERUPA ANGKA SAJA\n\n");
-printf(" 4. UNTUK FITUR TRANSFER HANYA BISA MELAKUKAN TRANSFER KE SESAMA BANK DALAM 1 KALI TRANSAKSI\n\n");
-printf("				TEKAN ENTER UNTUK MELANJUTKAN KE TRANSAKSI ATM");
+printf(" 1. SETIAP SELESAI MEMASUKKAN DATA YANG DIMINTA, TEKAN ENTER\n");
+printf(" 2. SETIAP SELESAI MEMILIH OPSI YANG DIINGINKAN, TEKAN ENTER\n");
+printf(" 3. SETIAP DATA YANG DIMASUKKAN HANYA BERUPA ANGKA SAJA\n");
+printf(" 4. UNTUK FITUR TRANSFER, HANYA BISA MELAKUKAN TRANSFER\n");
+printf("    KE SESAMA BANK DALAM 1 KALI TRANSAKSI\n");
+printf("\n\n				TEKAN ENTER UNTUK MELANJUTKAN KE TRANSAKSI ATM");
 }
 void getMenu() { // Menu utama
-printf("	MENU UTAMA\n\n");
+printf("		MENU UTAMA\n\n");
 printf("  1. TRANSFER		5. PEMBAYARAN \n");
 printf("  2. PENARIKAN TUNAI	6. KELUAR \n");
 printf("  3. INFORMASI SALDO \n");
@@ -50,33 +52,40 @@ void getPin (){
 printf ("MASUKKAN PIN (6 DIGIT ANGKA)	: ");
 }
 
+void pinsalah(){
+printf ("	PIN SALAH\n");
+printf("MOHON PERIKSA DAN MASUKAN\n");
+printf ("	ULANG");
+printf("\n\n			TEKAN ENTER");
+}
+
 void getMenuPilihTransfer(){ // Menu Pilihan Transfer Dana
-printf("	SILAKAN PILIH TUJUAN TRANSFER\n\n");
+printf ("		TRANSFER\n\n");
+printf("SILAKAN PILIH TUJUAN TRANSFER :\n");
 printf(" 1. KE REK BANK BRI  \n");
 printf(" 2. KE REK BANK LAIN  \n");
 printf(" 3. KE MENU SEBELUMNYA  \n\n");
 }
 
 void getMenuInfoRekening(){ // Menu Mutasi Transaksi
-printf("			 INFO REKENING\n");
+printf("			 INFO REKENING\n\n");
 printf("1. INFO MUTASI REKENING\n");
 printf("2. UBAH PIN\n");
 }
 
 void rekeningsalah(){
-printf("\n");
-printf ("	MAAF NOMOR REKENING YANG ANDA\n");
+printf ("\n	MAAF NOMOR REKENING YANG ANDA\n");
 printf ("	  MASUKKAN TIDAK TERDAFTAR\n");
 printf ("	SILAKAN PERIKSA DAN MASUKKAN\n");
 printf ("   		   ULANG");
+printf ("\n\n		TEKAN ENTER");
 }
 
 void transaksigagal(){
-int sal = 15000000;
-printf ("			PT BANK RAKYAT INDONESIA\n\n");
-printf ("		TRANSAKSI GAGAL\n");
-printf ("	SALDO TIDAK MENCUKUPI\n\n");
-printf("	SALDO ANDA SAAT INI:Rp.%d,-\n", sal);
+int sal;
+printf ("		TRANSAKSI GAGAL\n\n");
+printf ("  SALDO TIDAK MENCUKUPI\n\n");
+printf (" SALDO ANDA SAAT INI:Rp.%d,-\n", sal);
 }
 
 void rekeningblokir(){
@@ -87,22 +96,28 @@ printf ("		  TERDEKAT");
 printf ("\n\n\n				TEKAN ENTER");
 }
 
-//void gopaygagal(){
-//printf ("	NOMOR GOPAY YANG ANDA MASUKKAN\n");
-//printf ("		  TIDAK TERDAFTAR\n");
-//printf ("		 DALAM AKUN GOPAY\n\n");
-//printf (" SILAKAN MASUKKAN ULANG NOMOR GOPAY!");
-//}
+void limittab(){
+printf ("		TRANSAKSI GAGAL\n\n");
+printf (" ANDA TELAH MENCAPAI LIMIT TABUNGAN\n\n");
+printf ("				TEKAN ENTER");
+getch();
+system ("cls");
+}
+
+void limittrans(){
+printf ("		TRANSAKSI GAGAL\n\n");
+printf ("ANDA TELAH MENCAPAI LIMIT TRANSAKSI\n\n");
+printf ("				TEKAN ENTER");
+}
 
 void waktu() {
-    struct tm *Sys_T;
- 
-    time_t Tval;
-    Tval = time(NULL);
-    Sys_T = localtime(&Tval); /* Untuk mendapatkan waktu lokal komputer */
-    /* Sys_T = gmtime(&Tval); / / Untuk mendapatkan waktu komputer berbasis GMT/UTC */
-    printf ( "\n\n TANGGAL DAN WAKTU : \n%s", asctime (Sys_T));
-    /* asctime berfungsi untuk mengubah struct tm menjadi string c dengan format Www Mmm dd hh:mm:ss yyyy */
+struct tm *Sys_T;
+time_t Tval;
+Tval = time(NULL);
+Sys_T = localtime(&Tval); /* Untuk mendapatkan waktu lokal komputer */
+/* Sys_T = gmtime(&Tval); / / Untuk mendapatkan waktu komputer berbasis GMT/UTC */
+printf ( "\n\n TANGGAL DAN WAKTU : \n%s", asctime (Sys_T));
+/* asctime berfungsi untuk mengubah struct tm menjadi string c dengan format Www Mmm dd hh:mm:ss yyyy */
 }
 
 void addElmTab(TabInt *T, int x){ // Prosedur untuk menambahkan Elemen pada sebuah Tabel yang terdapat pada tabel integer
@@ -120,8 +135,7 @@ void cetakTabel(TabInt T){ // Prosedur untuk mencetak isi tabel pada tabel integ
 F.S: Semua elemen pada T dicetak
 */
 // Variabel / Kamus
-int i;
- 
+int i; 
 // Algoritma
 i=1;
 while(i<=T.nEff){
@@ -134,6 +148,7 @@ void keluar(){ // Keluar program dengan nilai return 0
 printf("	PT BANK RAKYAT INDONESIA\n\n");
 printf("		TERIMAKASIH\n");
 printf("	ATAS KEPERCAYAAN ANDA");
+printf("\n\n				TEKAN ENTER");
 }
 
 int main(){
@@ -162,6 +177,7 @@ int main(){
 	char fGopay1[15]="83876543210";
 	char fGopay2[15]="89123456789"; 
 	TabInt Tab1, Tab2, Tab3, Tab4, Tab5, Tab6, Tab7, Tab8;
+	int limittrf=10000000;
 	
 	system("COLOR 8B");
 	system("cls");
@@ -187,19 +203,18 @@ int main(){
 		}	
 	pin:
 		printf("\n");
-		printf("	MASUKAN PIN: "); scanf("%d", &pin);
+		getPin(); scanf("%d", &pin);
 			if (pin==fpin) {
 			system("cls");
 			goto menu;
-			menu:
+						menu:
 			getMenu();
 			printf("\n PILIHAN ANDA:"); scanf("%s", &y1);
 			system("cls");
 			}
 			else if (i<2) { // diberi kesempatan memasukan PIN sebanyak 3x.
 				system("cls");
-				printf("	PIN YANG ANDA MASUKAN SALAH!\n");
-				printf("					TEKAN ENTER");
+				pinsalah();
 				i=i+1;
 				getch();
 				system("cls");
@@ -241,8 +256,7 @@ int main(){
 		else {
 			system("cls");
 			goto pilihtransfer;
-			}
-		}
+			}}	
 		else{
 			system("cls");
 			rekeningsalah();
@@ -254,6 +268,7 @@ goto pilihtransfer;
 }
 transfer:
 if (sal>=N) {
+	if (N<=limittrf){
 sal = sal - total;
 if (sal>=50000){
 printf("TRANSAKSI BERHASIL. \nSALDO ANDA SAAT INI:Rp.%d,-\n", sal);
@@ -272,13 +287,16 @@ return 0;
 }
 }
 else if (sal<50000){
-printf ("	TRANSAKSI GAGAL\n");
-printf (" ANDA TELAH MENCAPAI LIMIT TABUNGAN\n\n");
-printf ("				TEKAN ENTER");
-getch();
-system ("cls");
+limittab();
 goto menu;
 }}
+else if(N>limittrf){
+system ("cls");
+limittrans();;
+getch();
+system ("cls");	goto menu;
+}
+}
 else if (sal<N) {
 transaksigagal();
 printf("APAKAH ANDA INGIN MELAKUKAN TRANSAKSI LAGI : 1.YA\n");
@@ -462,7 +480,7 @@ goto gagal;
 tariktunai:
 getch();
 system("cls");
-printf("				TARIK TUNAI\n");
+printf("				TARIK TUNAI\n\n");
 printf("Jumlah Penarikan:Rp.%d,-\n", TR);
 printf("APAKAH SUDAH BENAR	: 1.YA\n");
 printf("				2.TIDAK\n");
@@ -488,7 +506,7 @@ tarik:
 system("cls");
 sal = sal - TR;
 if (sal>=50000){
-printf("TRANSAKSI BERHASIL. \nSALDO ANDA SAAT INI:Rp.%d,-\n", sal);
+printf("	TRANSAKSI BERHASIL. \nSALDO ANDA SAAT INI:Rp.%d,-\n", sal);
 addElmTab(&Tab2, TR);
 printf("APAKAH ANDA INGIN MELAKUKAN TRANSAKSI LAGI: 1. YA\n");
 printf("						2. TIDAK\n");
@@ -502,13 +520,13 @@ else if (y7=='2'){
 keluar();
 }}
 else if (sal<50000){
-printf ("	TRANSAKSI GAGAL\n");
-printf ("ANDA MENCAPAI LIMIT TABUNGAN ANDA");	
+limittab();	
+goto menu;
 }
 break;
 }
 case '3': { // Pengecekan Saldo
-printf("				 SALDO	:\n\n");
+printf("				INFORMASI SALDO	:\n\n");
 printf("				Rp.%d,-\n\n", sal);
 printf("TRANSAKSI LAGI?	1. YA\n"); 
 printf ("			2. TIDAK\n");
@@ -525,15 +543,12 @@ return 0;
 }
 }
 case '4': {
-// Histori Transaksi
-//mutasitrx:
-//system("cls");
 getMenuInfoRekening();
-printf("Masukan pilihan:"); scanf("%s", &y8);
+printf("PILIHAN ANDA :"); scanf("%s", &y8);
 system("cls");
 switch (y8) {
 case '1': { // Transaksi Terakhir
-printf (" 			TRANSAKSI TERAKHIR \n");
+printf (" 			TRANSAKSI TERAKHIR \n\n");
 waktu();
 printf("\nTRANSFER DANA (DEBIT)\n");
 cetakTabel(Tab1); // Mencetak isi Tabel pada TabInt Tab1
@@ -544,13 +559,13 @@ printf("\n");
 printf ("PEMBAYARAN TAGIHAN LISTRIK (DEBIT)\n");
 cetakTabel(Tab3); 
 printf ("\nPEMBELIAN ISI ULANG PULSA (DEBIT)\n");
-//cetakTabel(Tab4);
-//cetakTabel(Tab5);
-//cetakTabel(Tab6);
-//cetakTabel(Tab7);
-printf ("\nPENGISIAN (DEBIT)GOPAY\n");
+cetakTabel(Tab4);
+cetakTabel(Tab5);
+cetakTabel(Tab6);
+cetakTabel(Tab7);
+printf ("\nPENGISIAN GOPAY (DEBIT)\n");
 cetakTabel(Tab8);
-printf("\n\nTRANSAKSI LAGI?	1. YA\n"); 
+printf("\n\nTRANSAKSI LAGI	1. YA\n"); 
 printf ("		2. TIDAK\n");
 printf ("\nPILIHAN ANDA		: "); 
 scanf("%s", &y3);
@@ -564,8 +579,6 @@ keluar();
 return 0;
 }
 break;
-	//waktu();
-	//printf ("PILIH TRANSAKSI LAGI?");
 }
 case '2': { // Ubah Pin
 printf("				UBAH PIN\n");
@@ -575,10 +588,10 @@ if(pin==fpin){
 system ("cls");
 goto pinbaru;
 pinbaru:
-printf("MASUKKAN PIN BARU (6 DIGIT ANGKA):"); scanf("%d", &npin);
+getPin(); scanf("%d", &npin);
 system("cls");
 fpin=npin;
-keluar();
+goto pin;
 return 0;
 //break;
 }
@@ -595,11 +608,11 @@ getch();
 system ("cls");
 keluar();
 return 0;
-
 }}}
 break;}
 case '5' : { // Pembayaran
-printf ("SILAKAN PILIH JENIS PEMBAYARAN\n");
+printf ("			PEMBAYARAN\n\n");
+printf ("SILAKAN PILIH JENIS PEMBAYARAN : \n");
 printf ("1. PLN\n");
 printf ("2. PULSA ISI ULANG\n");
 printf ("3. GOPAY\n");
@@ -626,7 +639,7 @@ if (y3=='1') {
 goto tunggak;
 }
 else {
-keluar();
+goto menu;
 }
 system("cls");
 }
@@ -647,7 +660,7 @@ if (y3=='1') {
 goto tunggak;
 }
 else {
-keluar();
+goto menu;
 }
 system("cls");
 }
@@ -667,6 +680,7 @@ keluar();
 tunggak:
 if (sal>TGK||sal>TGK1) {
 sal = sal - total;
+if (sal>=50000){
 printf("TRANSAKSI BERHASIL. \nSALDO ANDA SAAT INI:Rp.%d,-\n", sal);
 printf("\n"); 
 addElmTab(&Tab3, total);
@@ -678,6 +692,12 @@ if (n1=='1'){
 goto menu;
 }else {
 keluar();
+return 0;
+}
+}
+else if (sal<50000){
+limittab();
+goto menu;
 }
 }
 else if(sal<TGK||sal<TGK1){
@@ -714,6 +734,7 @@ printf ("PILIHAN ANDA	: "); scanf ("%s", &a4);
 system("cls");
 if (a4=='1'){
 	sal = sal - 20000;
+	if (sal>=50000){
 	printf("TRANSAKSI BERHASIL. \nSALDO ANDA SAAT INI:Rp.%d,-\n", sal);
 	printf("\n"); 
 	addElmTab(&Tab4, 20000);
@@ -728,8 +749,14 @@ if (a4=='1'){
 	return 0;
 	}
 	}
+	else if (sal<50000){
+	limittab();
+	goto menu;
+	}
+	}
 else if (a4=='2'){
 	sal = sal - 25000;
+	if (sal>=50000){
 	printf("TRANSAKSI BERHASIL. \nSALDO ANDA SAAT INI:Rp.%d,-\n", sal);
 	printf("\n"); 
 	addElmTab(&Tab5, 25000);
@@ -743,9 +770,15 @@ else if (a4=='2'){
 	keluar();
 	return 0;
 	}
+	}
+	else if (sal<50000){
+	limittab();
+	goto menu;
+	}
 }
 else if (a4=='3'){
 	sal = sal - 50000;
+	if (sal>=50000){
 	printf("TRANSAKSI BERHASIL. \nSALDO ANDA SAAT INI:Rp.%d,-\n", sal);
 	printf("\n"); 
 	addElmTab(&Tab6, 50000);
@@ -759,10 +792,16 @@ else if (a4=='3'){
 	else {
 	keluar();
 	return 0;
-}
+	}
+	}
+	else if (sal<50000){
+	limittab();
+	goto menu;
+	}
 }
 else if (a4=='4'){
 	sal = sal - 100000;
+	if (sal>=50000){
 	printf("TRANSAKSI BERHASIL. \nSALDO ANDA SAAT INI:Rp.%d,-\n", sal);
 	printf("\n"); 
 	addElmTab(&Tab7, 100000);
@@ -777,7 +816,13 @@ else if (a4=='4'){
 	keluar();
 	return 0;
 	}
-}else if(a4='5'){
+		}
+	else if (sal<50000){
+	limittab();
+	goto menu;
+	}
+}
+else if(a4='5'){
 goto provider;
 }}
 else if (a2=='3'){
@@ -790,14 +835,12 @@ printf ("4. KEMBALI KE MENU SEBELUMNYA\n");
 printf ("PILIHAN ANDA	: "); scanf ("%s", &a5);
 if (a5=='1'){
 system ("cls");
-printf ("SILAKAN MASUKAN NOMOR TELEPON ANDA	: 301341 - "); scanf ("%d", &NoGopay);
-//if (NoGopay==fGopay){
+printf ("SILAKAN MASUKAN NOMOR TELEPON ANDA	: 301341 - "); scanf ("%s", &NoGopay);
 system("cls");
-printf("SILAKAN MASUKKAN JUMLAH GOPAY YANG INGI DIISI:"); scanf("%d", &N);
+printf("SILAKAN MASUKKAN JUMLAH GOPAY YANG INGIN DIISI:"); scanf("%d", &N);
 system("cls");
 printf("				TOP-UP GOPAY\n");
-printf ("NO. HP		: %s\n", fGopay);
-printf ("NAMA		: ZAHWA PUTRI HAMIDA\n");
+printf ("NO. HP		: %s\n", NoGopay);
 printf("JENIS		: DRIVER\n");
 printf("JUMLAH TOP-UP	: Rp.%d,-\n",N);
 printf ("ADMIN BANK	: 	Rp.0\n");
@@ -811,6 +854,7 @@ goto gopay;
 gopay:
 if (sal>N) {
 sal = sal - total;
+	if (sal>=50000){
 printf("TRANSAKSI BERHASIL. \nSALDO ANDA SAAT INI:Rp.%d,-\n\n", sal);
 addElmTab(&Tab8, total);
 printf("APAKAH ANDA INGIN MELAKUKAN TRANSAKSI LAGI : 1.YA\n");
@@ -824,6 +868,11 @@ keluar();
 return 0;
 }
 }
+else if (sal<50000){
+	limittab();
+	goto menu;
+}
+}
 else if(sal<=N){
 transaksigagal();
 }
@@ -832,25 +881,15 @@ else {
 system("cls");
 goto jenisgopay;
 }
-//}
-//else if(NoGopay != fGopay) {
-//system ("cls");
-//gopaygagal();
-//getch();
-//system ("cls");{
-//goto jenisgopay;}
-//}
 }
 else if (a5=='2'){
 system ("cls");
-printf ("SILAKAN MASUKAN NOMOR TELEPON ANDA	: 301342 - "); scanf ("%d", &NoGopay);
-//if (NoGopay==fGopay1){
+printf ("SILAKAN MASUKAN NOMOR TELEPON ANDA	: 301342 - "); scanf ("%s", &NoGopay);
 system("cls");
 printf("SILAKAN MASUKKAN JUMLAH GOPAY YANG INGI DIISII:"); scanf("%d", &N);
 system("cls");
 printf("				TOP-UP GOPAY\n");
-printf ("NO. HP		: %\n", fGopay1);
-printf ("NAMA		: SHANIA AULIYA\n");
+printf ("NO. HP		: %s\n", NoGopay);
 printf("JENIS		: CUSTOMER\n");
 printf("JUMLAH TOP-UP	: Rp.%d,-\n",N);
 printf ("ADMIN BANK	: 	Rp.0\n");
@@ -867,25 +906,15 @@ else {
 system("cls");
 goto jenisgopay;
 }
-//}
-//else {
-//system ("cls");
-//gopaygagal();
-//getch();
-//system ("cls");{
-//goto jenisgopay;}
-//}
 }
 else if (a5=='3'){
 system ("cls");
-printf ("SILAKAN MASUKAN NOMOR TELEPON ANDA	: 301341 - "); scanf ("%d", &NoGopay);
-//if (NoGopay==fGopay2){
+printf ("SILAKAN MASUKAN NOMOR TELEPON ANDA	: 301341 - "); scanf ("%s", &NoGopay);
 system("cls");
-printf("SILAKAN MASUKKAN JUMLAH GOPAY YANG INGI DIISII:"); scanf("%d", &N);
+printf("SILAKAN MASUKKAN JUMLAH GOPAY YANG INGIN DIISII:"); scanf("%d", &N);
 system("cls");
 printf("				TOP-UP GOPAY\n");
-printf ("NO. HP		: %d\n", fGopay2);
-printf ("NAMA		: ERIKA ALZENA\n");
+printf ("NO. HP		: %s\n", NoGopay);
 printf("JENIS		: MERCHANT\n");
 printf("JUMLAH TOP-UP	: Rp.%d,-\n",N);
 printf ("ADMIN BANK	: 	Rp.0\n");
@@ -901,15 +930,15 @@ else {
 system("cls");
 goto jenisgopay;
 }
-//}
-//else {
-//system ("cls");
-//gopaygagal();
-//getch();
-//system ("cls");{
-//goto jenisgopay;}
-//}
 }
+else if (a5=='4'){
+system ("cls");
+goto menu;
+}
+}
+else if (a2=='4'){
+system ("cls");
+goto menu;
 }
 }
 case '6' :{
